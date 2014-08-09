@@ -10,8 +10,9 @@ Util = require "util"
 
 module.exports = (robot) ->
   robot.respond /show storage$/i, (msg) ->
-    output = Util.inspect(robot.brain.data, false, 4)
-    msg.send output
+    if robot.auth.hasRole(msg.envelope.user, 'admin')
+      output = Util.inspect(robot.brain.data, false, 4)
+      msg.send output
 
   robot.respond /show users$/i, (msg) ->
     response = ""
